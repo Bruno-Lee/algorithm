@@ -91,7 +91,7 @@ var sort = {
     insertSort: function(d, cmp) {  //直接插入排序
         /*
             @param d 需要排序的数组
-            @param desc 是否降序
+            @param cmp 是否降序或传入一个比较函数
         */
         var cmp = this.getCmp(cmp);
         for (var i = 0; i < d.length - 1; i++) {
@@ -113,7 +113,7 @@ var sort = {
     shellSort: function (d, cmp) {  //希尔排序
         /*
             @param d 需要排序的数组
-            @param desc 是否降序
+            @param cmp 是否降序或传入一个比较函数
         */
         var cmp = this.getCmp(cmp),
             len = d.length,
@@ -146,24 +146,24 @@ var sort = {
         return d;
     },
 
-    simpleSelectionSort: function (d, cmp) {  //简单选择排序
+    simpleSelectSort: function (d, cmp) {  //简单选择排序
         /*
             @param d 需要排序的数组
-            @param desc 是否降序
+            @param cmp 是否降序或传入一个比较函数
         */
         var cmp = this.getCmp(cmp),
             len = d.length,
             r, temp;
 
         var select = function (arr, start) {  //选择最大或最小的元素
-                var key = start;
-                for (var i = start + 1; i < len; i++) {
-                    if (cmp(arr[i], arr[key]) < 0) {
-                        key = i;
-                    }
+            var key = start;
+            for (var i = start + 1; i < len; i++) {
+                if (cmp(arr[i], arr[key]) < 0) {
+                    key = i;
                 }
-                return key;
-            };
+            }
+            return key;
+        };
 
         for (var i = 0; i < len; i++) {
             r = select(d, i);
@@ -173,5 +173,77 @@ var sort = {
         }
 
         return d;
+    },
+
+    twoWaySelectSort: function (d, cmp) {  //二元选择排序
+        /*
+            @param d 需要排序的数组
+            @param cmp 是否降序或传入一个比较函数
+        */
+        var cmp = this.getCmp(cmp),
+            len = d.length,
+            max, min, temp;
+
+        var selectMaxMin = function (arr, start) {
+            var max = min = start;
+
+            for (var i = start + 1; i < len - start; i++) {
+                if (cmp(arr[i], arr[min]) < 0) {
+                    min = i;
+                }
+
+                if (cmp(arr[max], arr[i]) < 0) {
+                    max = i;
+                }
+            }
+
+            return {
+                'max': max,
+                'min': min
+            };
+        };
+
+        for (var i = 0; i <= len / 2; i++) {
+            var obj = selectMaxMin(d, i),
+                last = len - i - 1;
+
+            max = obj.max;
+            min = obj.min;
+
+            if (max === i) {  //如果最大值出现在本次排序子序列的第一个
+                if (min === last) {
+                //如果最小值为本次子序列最后一个，则直接和最大值交换如[4,3,2]
+                    temp = d[min];
+                    d[min] = d[max];
+                    d[max] = temp;
+                } else { 
+                /*
+                    如果最小值不是自序列最后一个如[4,2,3]，则
+                    ->先保存最后一个元素d[last]的值到temp
+                    ->交换最大值d[max]到最后一个位置last
+                    ->将最小值d[min]移动到本次序列第一个位置i
+                    ->将保存的temp元素(一开始的d[last])移动到最小值的位置min
+                */
+                    temp = d[last];
+                    d[last] = d[max];
+                    d[i] = d[min];
+                    d[min] = temp;
+                }
+            } else { //如果最大最小值都在序列中间(不在首尾)
+                temp = d[i];
+                d[i] = d[min];
+                d[min] = temp;
+
+                temp = d[last];
+                d[last] = d[max];
+                d[max] = temp;
+            }
+        }
+
+        return d;
+    },
+
+    heapSort: function (d, cmp) {  //堆排序
+        
     }
 }
