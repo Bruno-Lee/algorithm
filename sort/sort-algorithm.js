@@ -244,6 +244,82 @@ var sort = {
     },
 
     heapSort: function (d, cmp) {  //堆排序
+        var len = d.length,
+            cmp = this.getCmp(cmp);
+
+        var swap = function (d, l, r) {  //交换元素
+            var temp = d[l];
+            d[l] = d[r];
+            d[r] = temp;
+        };
+
+        var buildHeap = function (d) {  //建堆
+            var size = d.length,
+                parent = Math.floor(size / 2) - 1; //二叉树中最后一个非叶子节点
+
+            for (var i = parent; i >= 0; i--) {  //从最后一个非叶子结点开始建堆
+                adjustHeap(d, i, size);
+            }
+        };
+
+        var adjustHeap = function (d, parent, size) {  //调整堆
+            var flag = parent,  //父节点
+                leftChild = 2 * parent + 1,   //parent的左子节点下标
+                rightChild = 2 * (parent + 1);  //parent的右子节点下标
+
+            if (leftChild < size && cmp(d[parent], d[leftChild]) < 0) { 
+                /*
+                    如果父节点大(小)于左孩子,将左孩子置为标记结点
+                    否则标记结点仍为父节点
+                */
+                flag = leftChild;
+            }
+
+            if (rightChild < size && cmp(d[max], d[rightChild]) < 0) {
+                /*
+                    右孩子和标记结点比较,如果大(小)于右孩子
+                    则置标记结点为右孩子,此时标记结点是左右孩子、父节点三者中的最大(小)者
+                */
+                flag = rightChild;
+            }
+
+            if (flag !== parent) {
+                //如果标记节点发生变化，则交换父节点和标记节点，再次以新的父节点为起点向下调整堆
+                swap(d, flag, parent);
+                adjustHeap(d, flag, size);
+            }
+        };
+
+        if (len > 1) {
+            buildHeap(d);
+            
+            for (var i = len - 1; i > 0; i--) {
+                swap(d, 0, i);  //将最大(最小)元素置换到数组最后一个元素
+                adjustHeap(d, 0, i);  //再从0开始调整堆,将新二叉树在次调整为一个大(小)根堆
+            }
+        }
+
+        return d;
+        
+    },
+
+    mergeSort: function (d ,cmp) {
+        var merge = function (d, first, mid, last) {  //将两路归并为一个有序数组
+            var arr = [];
+
+            for (var i = first, j = mid, k = 0; i < mid && j < last; k++) {
+                arr[k] = d[i] < d[j] ? d[i++] : d[j++];
+            }
+
+            while (i < mid) {
+                arr[k++] = d[i++];
+            }
+
+            while (j < last) {
+                arr[k++] = d[j++];
+            }
+        }
+        
         
     }
 }
