@@ -1,0 +1,33 @@
+{
+  "name": "algorithm",
+  "version": "1.0.0",
+  "description": "js relazation of common algorithm",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --progress --hide-modules --config webpack.config.js",
+    "test": "node ./dist/index.js",
+    "start": "npm run build && npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Bruno-Lee/algorithm.git"
+  },
+  "keywords": [
+    "algorithm"
+  ],
+  "author": "Bruno Lee",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Bruno-Lee/algorithm/issues"
+  },
+  "homepage": "https://github.com/Bruno-Lee/algorithm#readme",
+  "devDependencies": {
+    "babel-core": "^6.18.0",
+    "babel-loader": "^6.2.7",
+    "babel-plugin-transform-runtime": "^6.15.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "webpack": "^2.1.0-beta.25"
+  },
+  "dependencies": {}
+}
