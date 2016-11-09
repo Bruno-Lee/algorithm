@@ -128,7 +128,7 @@ export function shellSort (d, cmp) {
     let dk = parseInt(len / 2);
     cmp = getCmp(cmp);
 
-    let shellInsertSort = function (dk) {
+    const shellInsertSort = (dk) => {
     /**
      * @func 增量排序的数组,比较函数,增量
      */
@@ -166,7 +166,7 @@ export function simpleSelectSort (d, cmp) {
     let temp;
     cmp = getCmp(cmp);
     
-    let select = function (arr, start) {  // 选择最大或最小的元素
+    const select = (arr, start) => {  // 选择最大或最小的元素
         let key = start;
         for (let i = start + 1; i < len; i++) {
             if (cmp(arr[i], arr[key]) < 0) {
@@ -198,7 +198,7 @@ export function twoWaySelectSort (d, cmp) {
     let len = d.length;
     cmp = getCmp(cmp);
 
-    let selectMaxMin = function (arr, start) {
+    const selectMaxMin = (arr, start) => {
         let max = min = start;
 
         for (let i = start + 1; i < len - start; i++) {
@@ -270,14 +270,14 @@ export function heapSort (d, cmp) {
     let len = d.length;
     
     /** @func swap 交换元素 */
-    let swap = function (d, l, r) {
+    const swap = (d, l, r) => {
         let temp = d[l];
         d[l] = d[r];
         d[r] = temp;
     };
 
     /** @func buildHeap 建堆 */
-    let buildHeap = function (d) {
+    const buildHeap = (d) => {
         let size = d.length;
         let parent = Math.floor(size / 2) - 1; // 二叉树中最后一个非叶子节点
 
@@ -288,7 +288,7 @@ export function heapSort (d, cmp) {
     };
 
     /** @func adjustHeap 调整堆 */
-    let adjustHeap = function (d, parent, size) {
+    const adjustHeap = (d, parent, size) => {
         let flag = parent; // 父节点
         let leftChild = 2 * parent + 1; // parent的左子节点下标
         let rightChild = 2 * (parent + 1); // parent的右子节点下标

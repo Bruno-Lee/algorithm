@@ -1,5 +1,5 @@
 import * as Sort from './sort';
-let arr = [112, 301, 2012, 44, 31, 1, 67, 10, -33, -101, -1];
+let arr = [112, 301, -33, 2012, 44, -101, 31, 1, 67, 10, -1];
 console.log('待排序数组', arr);
 console.log('冒泡排序', Sort.bubbleSort(arr));
 console.log('快速排序', Sort.quickSort(arr));
